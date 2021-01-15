@@ -1,6 +1,7 @@
 package View;
 
 
+import Controller.UsuarioControl;
 import Model.Telefone;
 import Model.Usuario;
 import java.util.ArrayList;
@@ -11,25 +12,57 @@ import javax.swing.table.DefaultTableModel;
  * @author tasso
  */
 public class CadastroView extends javax.swing.JFrame {
-    ArrayList <Usuario> ListUsr;
-    String modo;
+    //ArrayList <Usuario> ListUsr;
+    ArrayList <String[]> ListUsr;
+    String modo;    
+    public static final int NOME = 0;
+    public static final int EMAIL = 1;
+    public static final int SENHA = 2;
+    public static final int QUANTIDADE = 3; // quantidade de telefones
+    public static final int TELEFONES = 4;
+    public static final int DDD1 = 5;
+    public static final int NUMERO1 = 6;
+    public static final int TIPO1 = 7;
+    public static final int DDD2 = 8;
+    public static final int NUMERO2 = 9;
+    public static final int TIPO2 = 10;
+    public static final int DDD3 = 11;
+    public static final int NUMERO3 = 12;
+    public static final int TIPO3 = 13;
+    public static final int DDD4 = 14;
+    public static final int NUMERO4 = 15;
+    public static final int TIPO4 = 16;
+    
+    public CadastroView() {
+        initComponents();
+        
+        modo = "Navegar";
+        ListUsr = new ArrayList<>();
+        setLocationRelativeTo(null);
+        
+        //inicia a tela com os campos e botões de Dados desabilitados
+        ManipulaInterface();
+        
+    }
     
     //TABELA DE USUÁRIOS
     public void LoadTableUsr(){
-        Object Colunas[] = {"Nome","Email","Telefones"};
+        Object Colunas[] = {"Nome","Email","Senha","Telefones"};
         DefaultTableModel modelo = new DefaultTableModel(Colunas,0);
         
         for(int i=0; i<ListUsr.size();i++){
             //String telefones = "";
-            Object linha[] = {ListUsr.get(i).getNome(),
-                              ListUsr.get(i).getEmail(),
-                              ListUsr.get(i).getStringFone()};
+            String nome = ListUsr.get(i)[NOME];
+            String email = ListUsr.get(i)[EMAIL];
+            String senha = ListUsr.get(i)[SENHA];
+            String telefones = ListUsr.get(i)[TELEFONES];
+            Object linha[] = {nome,email,senha,telefones};
             modelo.addRow(linha);
         }
         
         tbl_usr.setModel(modelo);
         tbl_usr.getColumnModel().getColumn(0).setPreferredWidth(150);
-        tbl_usr.getColumnModel().getColumn(2).setPreferredWidth(100);
+        tbl_usr.getColumnModel().getColumn(3).setPreferredWidth(400);
     }
     
     //habilita e dasabilita os botões da tela
@@ -77,18 +110,6 @@ public class CadastroView extends javax.swing.JFrame {
         c_ddd4.setText("");
         c_numero4.setText("");
         c_tipo4.setText("");
-    }
-    
-    public CadastroView() {
-        initComponents();
-        
-        modo = "Navegar";
-        ListUsr = new ArrayList();
-        setLocationRelativeTo(null);
-        
-        //inicia a tela com os campos e botões de Dados desabilitados
-        ManipulaInterface();
-        
     }
 
     //trata a habilitação e desabilitação dos botões e dos campos
@@ -177,14 +198,14 @@ public class CadastroView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nome", "Email", "Telefones"
+                "Nome", "Email", "Senhas", "Telefones"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -203,7 +224,7 @@ public class CadastroView extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbl_usr);
         if (tbl_usr.getColumnModel().getColumnCount() > 0) {
             tbl_usr.getColumnModel().getColumn(0).setPreferredWidth(150);
-            tbl_usr.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tbl_usr.getColumnModel().getColumn(3).setPreferredWidth(400);
         }
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Dados"));
@@ -329,19 +350,16 @@ public class CadastroView extends javax.swing.JFrame {
                                 .addComponent(c_email, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel4)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(c_senha)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
+                            .addComponent(c_senha, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel8)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(c_tipo1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(c_tipo1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel11)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -459,27 +477,17 @@ public class CadastroView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(78, 78, 78)
-                                .addComponent(btn_novo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btn_alterar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btn_excluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 12, Short.MAX_VALUE)))
+                            .addComponent(btn_alterar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_novo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_excluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -490,13 +498,16 @@ public class CadastroView extends javax.swing.JFrame {
                 .addGap(4, 4, 4)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_novo)
-                    .addComponent(btn_alterar)
-                    .addComponent(btn_excluir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(btn_novo)
+                        .addGap(13, 13, 13)
+                        .addComponent(btn_alterar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_excluir))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -546,61 +557,111 @@ public class CadastroView extends javax.swing.JFrame {
     
     //BOTÃO SALVAR
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-     
+        
+        int index = tbl_usr.getSelectedRow();
         ArrayList <Telefone> ListFone = new ArrayList();
+        String usuario[] = new String[17];
 
         String nome = c_nome.getText();
         String email = c_email.getText();
         String senha = c_senha.getText();
 
         //assumindo que pelo menos um campo de telefone é preenchido
-        int ddd1 = Integer.parseInt(c_ddd1.getText());
+        String ddd1 = c_ddd1.getText();
         String numero1 = c_numero1.getText();
-        String tipo1 = c_tipo1.getText();
-        String fone = c_numero1.getText();        
+        String tipo1 = c_tipo1.getText();       
 
-        Telefone tel1 = new Telefone(ddd1,numero1,tipo1);
-        ListFone.add(tel1);
-
+        String telefones;
+        telefones = "("+ddd1+")"+numero1+" - "+tipo1;
+        String quantidade_telefones = "1";
+        if(modo.equals("Novo")){
+            usuario[NOME] = nome; 
+            usuario[EMAIL] = email;
+            usuario[SENHA] = senha;
+            usuario[QUANTIDADE] = quantidade_telefones;
+            usuario[TELEFONES] = telefones;
+            usuario[DDD1] = ddd1;
+            usuario[NUMERO1] = numero1;
+            usuario[TIPO1] = tipo1;
+        } else if(modo.equals("Alterar")){
+            ListUsr.get(index)[NOME] = nome;
+            ListUsr.get(index)[EMAIL] = email;
+            ListUsr.get(index)[SENHA] = senha;
+            ListUsr.get(index)[QUANTIDADE] = quantidade_telefones;
+            ListUsr.get(index)[TELEFONES] = telefones;
+            ListUsr.get(index)[DDD1] = ddd1;
+            ListUsr.get(index)[NUMERO1] = numero1;
+            ListUsr.get(index)[TIPO1] = tipo1;
+        }
+        
         //só adiciona a lista ListFone os telefones com campo preechidos
         //verifica se o 2º campo está preenchido
         String numero2 = c_numero2.getText();
         if(!(c_ddd2.getText().equals("")) && !(numero2.equals(""))){
-            int ddd2 = Integer.parseInt(c_ddd2.getText());
+            quantidade_telefones = "2";
+            String ddd2 = c_ddd2.getText();
             String tipo2 = c_tipo2.getText();
-            Telefone tel2 = new Telefone(ddd2,numero2,tipo2);
-            ListFone.add(tel2);
+            telefones = telefones + ", ("+ddd2+")"+numero2+" - "+tipo2;
+            
+            if(modo.equals("Novo")){
+                usuario[DDD2] = ddd2;
+                usuario[NUMERO2] = numero2;
+                usuario[TIPO2] = tipo2;
+            } else if(modo.equals("Alterar")){
+                    ListUsr.get(index)[DDD2] = ddd2;
+                    ListUsr.get(index)[NUMERO2] = numero2;
+                    ListUsr.get(index)[TIPO2] = tipo2;
+            }
+            usuario[TELEFONES] = telefones;            
 
             //verifica se o 3º campo está preenchido
             String numero3 = c_numero3.getText();
             if(!(c_ddd3.getText().equals("")) && !(numero3.equals(""))){
-                int ddd3 = Integer.parseInt(c_ddd3.getText());            
+                quantidade_telefones = "3";
+                String ddd3 = c_ddd3.getText();            
                 String tipo3 = c_tipo3.getText();
-                Telefone tel3 = new Telefone(ddd3,numero3,tipo3);
-                ListFone.add(tel3);
+                telefones = telefones + ", ("+ddd3+")"+numero3+" - "+tipo3;
+            
+                if(modo.equals("Novo")){
+                    usuario[DDD3] = ddd3;
+                    usuario[NUMERO3] = numero3;
+                    usuario[TIPO3] = tipo3;
+                } else if(modo.equals("Alterar")){
+                    ListUsr.get(index)[DDD3] = ddd3;
+                    ListUsr.get(index)[NUMERO3] = numero3;
+                    ListUsr.get(index)[TIPO3] = tipo3;
+                }
+                usuario[TELEFONES] = telefones;
 
                 //verifica se o 4º campo está preechido
                 String numero4 = c_numero4.getText();
                 if(!(c_ddd4.getText().equals("")) && !(numero4.equals(""))){
-                    int ddd4 = Integer.parseInt(c_ddd4.getText());            
+                    quantidade_telefones = "4";
+                    String ddd4 = c_ddd4.getText();            
                     String tipo4 = c_tipo4.getText();
-                    Telefone tel4 = new Telefone(ddd4,numero4,tipo4);
-                    ListFone.add(tel4);
+                    telefones = telefones + ", ("+ddd4+")"+numero4+" - "+tipo4;
+            
+                    if(modo.equals("Novo")){
+                        usuario[DDD4] = ddd4;
+                        usuario[NUMERO4] = numero4;
+                        usuario[TIPO4] = tipo4; 
+                    } else if(modo.equals("Alterar")){
+                        ListUsr.get(index)[DDD4] = ddd4;
+                        ListUsr.get(index)[NUMERO4] = numero4;
+                        ListUsr.get(index)[TIPO4] = tipo4;
+                    }
+                    usuario[TELEFONES] = telefones;
                 }
             }
         }
 
-        if(modo.equals("Novo")){
-            Usuario usuario = new Usuario(nome, email, senha, ListFone);
-            ListUsr.add(usuario); 
-        } else if(modo.equals("Alterar")){
-            int index = tbl_usr.getSelectedRow();
-            ListUsr.get(index).setNome(nome);
-            ListUsr.get(index).setEmail(email);
-            ListUsr.get(index).setSenha(senha);
-            ListUsr.get(index).setListFone(ListFone);
-        }
-
+        //MVC
+        if(UsuarioControl.SalvarUsuario(nome,email,senha,ListFone)){
+            this.LoadTableUsr();
+            JOptionPane.showMessageDialog(this, "Usuario salvo com sucesso!");
+        }else
+            JOptionPane.showMessageDialog(this, "Erro ao salvar o usuario!");
+        ListUsr.add(usuario);
         LoadTableUsr();
         modo = "Navegar";
         ManipulaInterface();
@@ -623,48 +684,35 @@ public class CadastroView extends javax.swing.JFrame {
     private void tbl_usrMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_usrMouseClicked
         int index = tbl_usr.getSelectedRow();
         if(index>=0 && index<ListUsr.size()){ //verifica se o click foi em uma dar linhas da tabela
-            Usuario U = ListUsr.get(index);
+            String usuario[] = ListUsr.get(index);
             //carrega os campos nome, email e senha
-            String nome = U.getNome();
-            String email = U.getEmail();
-            String senha = U.getSenha();
+            String nome = usuario[NOME];
+            String email = usuario[EMAIL];
+            String senha = usuario[SENHA];
             
             c_nome.setText(nome);
             c_email.setText(email);
             c_senha.setText(senha);
             
-            //carrega os telefones
-            int ddd [] = new int[3];
-            ArrayList <String> numero = new ArrayList();
-            ArrayList <String> tipo = new ArrayList();
-            Telefone T = new Telefone();
-            
-            int i;
-            for(i=0 ; i<ListUsr.get(index).getListFone().size() ; i++){
-                T = ListUsr.get(index).getListFone().get(i);
-                ddd[i] = T.getDdd();
-                numero.add(T.getNumero());
-                tipo.add(T.getTipo());
-            }
-            
-            c_ddd1.setText(String.valueOf(ddd[0]));
-            c_numero1.setText(numero.get(0));
-            c_tipo1.setText(tipo.get(0));
+            c_ddd1.setText(ListUsr.get(index)[DDD1]);
+            c_numero1.setText(ListUsr.get(index)[NUMERO1]);
+            c_tipo1.setText(ListUsr.get(index)[TIPO1]);
             //verifica se há outros números
-            if(i>1){
-                c_ddd2.setText(String.valueOf(ddd[1]));
-                c_numero2.setText(numero.get(1));
-                c_tipo2.setText(tipo.get(1));
+            int quantidade_telefones = Integer.parseInt(ListUsr.get(index)[QUANTIDADE]);
+            if(quantidade_telefones>1){
+                c_ddd2.setText(ListUsr.get(index)[DDD2]);
+                c_numero2.setText(ListUsr.get(index)[NUMERO2]);
+                c_tipo2.setText(ListUsr.get(index)[TIPO2]);
                 
-                if(i>2){
-                    c_ddd3.setText(String.valueOf(ddd[2]));
-                    c_numero3.setText(numero.get(2));
-                    c_tipo3.setText(tipo.get(2));
+                if(quantidade_telefones>2){
+                    c_ddd3.setText(ListUsr.get(index)[DDD3]);
+                    c_numero3.setText(ListUsr.get(index)[NUMERO3]);
+                    c_tipo3.setText(ListUsr.get(index)[TIPO3]);
                     
-                    if(i>3){
-                        c_ddd4.setText(String.valueOf(ddd[3]));
-                        c_numero4.setText(numero.get(3));
-                        c_tipo4.setText(tipo.get(3));
+                    if(quantidade_telefones>3){
+                        c_ddd4.setText(ListUsr.get(index)[DDD4]);
+                        c_numero4.setText(ListUsr.get(index)[NUMERO4]);
+                        c_tipo4.setText(ListUsr.get(index)[TIPO4]);
                     } else{
                         c_ddd4.setText("");
                         c_numero4.setText("");

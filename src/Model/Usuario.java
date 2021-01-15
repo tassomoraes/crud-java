@@ -105,6 +105,14 @@ public class Usuario {
         this.Fone = Fone;
     }
     
+    //salvar na base de dados
+    public boolean Persistir(){
+        return true;
+    }
     
-    
+    //MVC
+    public static ArrayList<Usuario> getUsuarios(){
+        ArrayList<Usuario> usuario = new ArrayList();
+        return usuario;
+    }
 }

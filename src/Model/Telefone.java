@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.ArrayList;
+
 /**
  * @author tasso
  */
@@ -43,6 +45,10 @@ public class Telefone {
         this.Tipo = Tipo;
     }
     
-    
+    //MVC
+    public static ArrayList<Telefone> getTelefones(){
+        ArrayList<Telefone> telefones = new ArrayList();
+        return telefones;
+    }
     
 }
